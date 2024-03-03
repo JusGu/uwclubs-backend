@@ -3,8 +3,12 @@ from django.http import JsonResponse, HttpRequest
 from django.urls import path
 from django.views.decorators.http import require_http_methods
 import json
-from .env import is_prod
+
+from uwclubs_backend.calendar.endpoint import get_calendar
+from .consts.env import is_prod
 from django.middleware.csrf import get_token
+from uwclubs_backend.database.methods import select_events
+
 
 def csrf(request):
     return JsonResponse({'csrfToken': get_token(request)})
@@ -30,5 +34,6 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("health/", health, name="health"),
     path("search/", search, name="search"),
+    path("calendar/", get_calendar, name="calendar"),
     path('csrf/', csrf, name='csrf'),
 ]

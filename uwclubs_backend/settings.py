@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from .env import is_prod
+from .consts.env import is_prod
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -16,7 +16,7 @@ SECRET_KEY = 'django-insecure-5lf&5uu1$=57^=g(+8#b89r^b3wd!*&873q=qi+z=4_k%yqsr0
 DEBUG = not is_prod()
 
 APP_NAME = os.environ.get("FLY_APP_NAME")
-ALLOWED_HOSTS = [f"{APP_NAME}.fly.dev", "localhost"]
+ALLOWED_HOSTS = [f"{APP_NAME}.fly.dev", "localhost", "api.uwclubs.com"]
 
 
 # Application definition
