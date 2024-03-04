@@ -1,5 +1,5 @@
 from django.http import HttpRequest, HttpResponse, JsonResponse
-from uwclubs_backend.database.methods import select_events
+from uwclubs_backend.database.methods import select_event_by_id, select_events
 from django.views.decorators.http import require_http_methods
 from ics import Calendar, Event
 from datetime import datetime
@@ -7,9 +7,15 @@ from datetime import datetime
 @require_http_methods(["GET"])
 def get_calendar(request: HttpRequest):
     guild_id = request.GET.get('guild_id')
-    if not guild_id:
-        return JsonResponse({"error": "Guild ID cannot be empty"}, status=400)
-    events_data = select_events(guild_id)
+    event_id = request.GET.get('event_id')
+    events_data = None
+    if guild_id is None:
+        events_data = select_events(guild_id)
+    elif event_id is not None:
+        events_data = select_event_by_id(event_id)
+    else:
+        return JsonResponse({"error": "Invalid request, must provide guild_id or event_id"}, status=400)
+    
     events = events_data.data
 
     c = Calendar()
