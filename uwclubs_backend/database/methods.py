@@ -9,3 +9,4 @@ def select_events(guild_id: str):
 
 def select_event_by_id(event_id: str):
     response = supabase.table("events").select("*").eq("message_id", event_id).is_("deleted_at", "NULL").execute()
+    return response

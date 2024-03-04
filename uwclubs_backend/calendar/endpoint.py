@@ -9,7 +9,7 @@ def get_calendar(request: HttpRequest):
     guild_id = request.GET.get('guild_id')
     event_id = request.GET.get('event_id')
     events_data = None
-    if guild_id is None:
+    if guild_id is not None:
         events_data = select_events(guild_id)
     elif event_id is not None:
         events_data = select_event_by_id(event_id)
