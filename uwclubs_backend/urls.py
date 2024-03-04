@@ -5,7 +5,7 @@ from django.views.decorators.http import require_http_methods
 import json
 
 from uwclubs_backend.calendar.endpoint import get_calendar
-from .consts.env import is_prod
+from .consts.env import is_dev, is_prod
 from django.middleware.csrf import get_token
 from uwclubs_backend.database.methods import select_events
 
@@ -16,7 +16,11 @@ def csrf(request):
 # Health Check Endpoint
 @require_http_methods(["GET"])
 def health(request):
-    env = "prod" if is_prod() else "local"
+    env = "local"
+    if is_prod():
+        env = "prod"
+    if is_dev():
+        env = "dev"
     return JsonResponse({"data": "ok", "env": env})
 
 # Search Endpoint

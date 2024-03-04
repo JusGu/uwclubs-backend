@@ -7,3 +7,6 @@ def get_env(param_name: str):
 
 def is_prod():
     return os.environ.get("uwclubs_env") == "prod"
+
+def is_dev():
+    return os.environ.get("uwclubs_env") == "dev"
